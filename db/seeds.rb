@@ -29,25 +29,21 @@ class Seed
   end
 
   def create_lenders(quantity)
-    quantity.times do
-      name = Faker::Name.name
-      email = Faker::Internet.email
-      user = User.create(name: name,
-                         password: "password",
-                         email: email,
-                         role: 0)
+    User.populate(quantity) do |user|
+      user.name = Faker::Name.name
+      user.email = Faker::Internet.email
+      user.password = "password"
+      user.role = 0
       puts "created lender #{user.name}"
     end
   end
 
   def create_borrowers(quantity)
-    quantity.times do
-      name = Faker::Name.name
-      email = Faker::Internet.email
-      user = User.create(name: name,
-                         password: "password",
-                         email: email,
-                         role: 1)
+    User.populate(quantity) do |user|
+      user.name = Faker::Name.name
+      user.email = Faker::Internet.email
+      user.password = "password"
+      user.role = 1
       puts "created borrower #{user.name}"
     end
   end

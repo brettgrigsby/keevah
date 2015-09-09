@@ -23,16 +23,16 @@ gem "traceroute"
 gem "rails_12factor", group: :production
 gem "newrelic_rpm"
 gem "populator"
+gem "pry-rails"
+gem "poltergeist"
 
 group :development, :test do
-  gem "pry-rails"
   gem "awesome_print"
   gem "web-console", "~> 2.0"
   gem "rspec-rails"
   gem "capybara"
   gem "launchy"
   gem "database_cleaner"
-  gem "poltergeist"
 end
 
 group :development do

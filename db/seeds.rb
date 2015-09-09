@@ -32,7 +32,7 @@ class Seed
     User.populate(quantity) do |user|
       user.name = Faker::Name.name
       user.email = Faker::Internet.email
-      user.password = "password"
+      user.password_digest = "$2a$10$hmlfV8ZNxHs4AbxkT8iI9eTsewEyxZ/H5x4iaW5W8VSYzMeSB3OWK"
       user.role = 0
       puts "created lender #{user.name}"
     end
@@ -42,7 +42,7 @@ class Seed
     User.populate(quantity) do |user|
       user.name = Faker::Name.name
       user.email = Faker::Internet.email
-      user.password = "password"
+      user.password_digest = "$2a$10$hmlfV8ZNxHs4AbxkT8iI9eTsewEyxZ/H5x4iaW5W8VSYzMeSB3OWK"
       user.role = 1
       puts "created borrower #{user.name}"
     end

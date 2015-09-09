@@ -1,3 +1,5 @@
+require "populator"
+
 class Seed
   def run
     create_known_users

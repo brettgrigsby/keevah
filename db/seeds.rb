@@ -2,9 +2,8 @@ require "populator"
 
 class Seed
   def run
-    create_known_users
-    create_borrowers(31000)
     create_lenders(201000)
+    create_borrowers(31000)
     create_categories
     create_orders
   end

@@ -50,7 +50,7 @@ class Seed
         request.repayment_begin_date = Faker::Time.between(3.days.ago, Time.now)
         request.amount = "200"
         request.contributed = "0"
-        requset.user_id = user.id
+        request.user_id = user.id
       end
     end
   end

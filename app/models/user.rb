@@ -3,7 +3,6 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password
   validates :password, length: { minimum: 8 }
   validates :password, :name, :email, presence: true
-  validates :email
   validates_format_of :email, with: /.+@.+\..+/i
 
   enum role: %w(lender borrower admin)

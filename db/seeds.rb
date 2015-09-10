@@ -41,6 +41,9 @@ class Seed
       user.email = Faker::Internet.email
       user.password_digest = "$2a$10$hmlfV8ZNxHs4AbxkT8iI9eTsewEyxZ/H5x4iaW5W8VSYzMeSB3OWK"
       user.role = 1
+    end
+
+    borrowers.each do |borrower|
       LoanRequest.populate(17) do |request|
         request.title = Faker::Commerce.product_name
         request.description = Faker::Company.catch_phrase
@@ -49,7 +52,7 @@ class Seed
         request.repayment_begin_date = Faker::Time.between(3.days.ago, Time.now)
         request.amount = "200"
         request.contributed = "0"
-        request.user_id = user.id
+        request.user_id = borrower.id
         request.repayment_rate = 1
       end
     end

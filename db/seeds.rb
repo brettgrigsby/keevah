@@ -46,7 +46,7 @@ class Seed
         request.title = Faker::Commerce.product_name
         request.description = Faker::Company.catch_phrase
         request.status = [0, 1].sample
-        request.request_by_date = Faker::Time.between(7.days.ago, 3.days.ago)
+        request.requested_by_date = Faker::Time.between(7.days.ago, 3.days.ago)
         request.repayment_begin_date = Faker::Time.between(3.days.ago, Time.now)
         request.amount = "200"
         request.contributed = "0"

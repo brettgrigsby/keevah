@@ -2,9 +2,7 @@ require "populator"
 
 class Seed
   def run
-    create_lenders(201000)
-    create_borrowers(31000)
-    create_categories
+    put_requests_in_categories
     create_orders
   end
 
@@ -62,7 +60,6 @@ class Seed
     ["agriculture", "community", "education"].each do |cat|
       Category.create(title: cat, description: cat + " stuff")
     end
-    put_requests_in_categories
   end
 
   def put_requests_in_categories

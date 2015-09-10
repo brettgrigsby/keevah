@@ -67,7 +67,7 @@ class Seed
 
   def put_requests_in_categories
     categories = Category.all
-    LoanRequest.each do |request|
+    LoanRequest.all.each do |request|
       categories.sample.loan_requests << request
     end
   end

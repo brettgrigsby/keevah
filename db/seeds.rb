@@ -50,6 +50,7 @@ class Seed
         request.amount = "200"
         request.contributed = "0"
         request.user_id = user.id
+        request.repayment_rate = 1
       end
     end
   end

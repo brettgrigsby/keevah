@@ -5,7 +5,6 @@ class Seed
     create_known_users
     create_borrowers(31000)
     create_lenders(201000)
-    create_loan_requests_for_each_borrower(18)
     create_categories
     create_orders
   end
@@ -34,7 +33,6 @@ class Seed
       user.email = Faker::Internet.email
       user.password_digest = "$2a$10$hmlfV8ZNxHs4AbxkT8iI9eTsewEyxZ/H5x4iaW5W8VSYzMeSB3OWK"
       user.role = 0
-      puts "created lender #{user.name}"
     end
   end
 
@@ -44,7 +42,16 @@ class Seed
       user.email = Faker::Internet.email
       user.password_digest = "$2a$10$hmlfV8ZNxHs4AbxkT8iI9eTsewEyxZ/H5x4iaW5W8VSYzMeSB3OWK"
       user.role = 1
-      puts "created borrower #{user.name}"
+      LoanRequest.populate(17) do |request|
+        request.title = Faker::Commerce.product_name
+        request.description = Faker::Company.catch_phrase
+        request.status = [0, 1].sample
+        request.request_by = Faker::Time.between(7.days.ago, 3.days.ago)
+        repayment_begin_date = Faker::Time.between(3.days.ago, Time.now)
+        request.amount = "200"
+        request.contributed = "0"
+        requset.user_id = user.id
+      end
     end
   end
 
@@ -56,35 +63,9 @@ class Seed
   end
 
   def put_requests_in_categories
-    LoanRequest.all.shuffle.each do |request|
-      Category.all.shuffle.first.loan_requests << request
-      puts "linked request and category"
-    end
-  end
-
-  def create_loan_requests_for_each_borrower(quantity)
-    quantity.times do
-      borrowers.each do |borrower|
-        title = Faker::Commerce.product_name
-        description = Faker::Company.catch_phrase
-        status = [0, 1].sample
-        request_by =
-          Faker::Time.between(7.days.ago, 3.days.ago)
-        repayment_begin_date =
-          Faker::Time.between(3.days.ago, Time.now)
-        amount = "200"
-        contributed = "0"
-        request = borrower.loan_requests.create(title: title,
-                                                description: description,
-                                                amount: amount,
-                                                status: status,
-                                                requested_by_date: request_by,
-                                                contributed: contributed,
-                                                repayment_rate: "weekly",
-                                                repayment_begin_date: repayment_begin_date)
-        puts "created loan request #{request.title} for #{borrower.name}"
-        puts "There are now #{LoanRequest.count} requests"
-      end
+    categories = Category.all
+    LoanRequest.each do |request|
+      categories.sample.loan_requests << request
     end
   end
 
@@ -98,7 +79,6 @@ class Seed
                            { "#{request.id}" => donate },
                            user_id: lender.id)
       order.update_contributed(lender)
-      puts "Created Order for Request #{request.title} by Lender #{lender.name}"
     end
   end
 end

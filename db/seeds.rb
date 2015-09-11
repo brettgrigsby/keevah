@@ -7,15 +7,19 @@ class Seed
   end
 
   def lenders
-    User.where(role: 0)
+    @lenders ||= User.where(role: 0)
   end
 
   def borrowers
-    User.where(role: 1)
+    @borrowers ||= User.where(role: 1)
   end
 
   def orders
-    Order.all
+    @orders ||= Order.all
+  end
+
+  def loan_request_ids
+    @loan_request_ids ||= LoanRequest.pluck(:id)
   end
 
   def create_known_users
@@ -41,6 +45,8 @@ class Seed
       user.role = 1
     end
 
+    categories = Category.all
+
     borrowers.each do |borrower|
       LoanRequest.populate(17) do |request|
         request.title = Faker::Commerce.product_name
@@ -52,12 +58,19 @@ class Seed
         request.contributed = "0"
         request.user_id = borrower.id
         request.repayment_rate = 1
+        LoanRequestsCategory.populate(3) do |req_cat|
+          req_cat.category_id = categories.sample.id
+          req_cat.loan_request_id = request.id
+        end
       end
     end
   end
 
   def create_categories
-    ["agriculture", "community", "education"].each do |cat|
+    ["agriculture", "community", "education", "fun money",
+    "architectural", "philanthropic", "vehicle", "new home",
+    "vehicle", "new pet", "livestock", "equipment", "vacation",
+    "new child", "political campaign"].each do |cat|
       Category.create(title: cat, description: cat + " stuff")
     end
   end
@@ -69,14 +82,13 @@ class Seed
     end
   end
 
-  def create_orders
-    loan_requests = LoanRequest.all
+  def create_orders(count)
     possible_donations = %w(25, 50, 75, 100, 125, 150, 175, 200)
-    loan_requests.each do |request|
+    count.times do
       donate = possible_donations.sample
-      lender = User.where(role: 0).order("RANDOM()").take(1).first
-      order = Order.create(cart_items:
-                           { "#{request.id}" => donate },
+      lender = lenders.sample
+      request_id = loan_request_ids.sample
+      order = Order.create(cart_items: { "#{request.id}" => donate },
                            user_id: lender.id)
       order.update_contributed(lender)
     end

@@ -2,10 +2,6 @@ require "populator"
 
 class Seed
   def run
-    create_known_users
-    create_categories
-    create_lenders(200050)
-    create_borrowers(30050)
     create_orders(50050)
   end
 
@@ -84,7 +80,7 @@ class Seed
       donate = possible_donations.sample
       lender = lenders.sample
       request_id = loan_request_ids.sample
-      order = Order.create(cart_items: { "#{request.id}" => donate },
+      order = Order.create(cart_items: { "#{request_id}" => donate },
                            user_id: lender.id)
       order.update_contributed(lender)
     end

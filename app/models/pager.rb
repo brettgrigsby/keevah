@@ -1,7 +1,9 @@
 class Pager
-
-  def self.page(klass, page)
-    klass.offset(24 * page).limit(24)
+  def self.page(klass, page, count)
+    klass.offset(count * page).limit(count)
   end
 
+  def self.last(klass, count)
+    klass.count / count
+  end
 end

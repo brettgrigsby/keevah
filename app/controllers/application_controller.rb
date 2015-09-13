@@ -14,9 +14,9 @@ class ApplicationController < ActionController::Base
     current_user && current_user.borrower?
   end
 
-  def load_page
+  def load_page(klass)
     page = params[:page] || 1
-    @page = page.to_i
+    page == "last" ? @page = Pager.last(klass, 24) : @page = page.to_i
   end
 
   helper_method :create_cart, :current_user, :current_borrower?

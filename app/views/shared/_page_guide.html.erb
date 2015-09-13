@@ -1,9 +1,9 @@
 <div id="page-guide">
   <form action=<%= browse_path %>>
     <p>
-      <a href="#">first  -</a>
+    <a href=<%= browse_path(page: 1) %>>first  -</a>
       page: <input type="text" name="page" value=<%= @page.to_s %> id="page-input">
-      <a href="#">-  last</a>
+      <a href=<%= browse_path(page: "last") %>>-  last</a>
     </p>
     <input type="submit" style="visibility: hidden;">
   </form>

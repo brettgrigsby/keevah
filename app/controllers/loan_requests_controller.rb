@@ -3,7 +3,7 @@ class LoanRequestsController < ApplicationController
   before_action :load_page, only: [:index]
 
   def index
-    @loan_requests = LoanRequest.offset(@page * 24).limit(24)
+    @loan_requests = Pager.page(LoanRequest, @page)
   end
 
   def create

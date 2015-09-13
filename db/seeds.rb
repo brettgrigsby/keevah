@@ -2,7 +2,7 @@ require "populator"
 
 class Seed
   def run
-    create_orders(1300)
+    create_orders(90)
   end
 
   def lenders

@@ -2,8 +2,16 @@
   <form action=<%= browse_path %>>
     <p>
     <a href=<%= browse_path(page: 1) %>>first  -</a>
-      page: <input type="text" name="page" value=<%= @page.to_s %> id="page-input">
+      page: <input type="text" name="page" value=<%= @page[:current] %> id="page-input">
       <a href=<%= browse_path(page: "last") %>>-  last</a>
+    </p>
+    <% (1..@page[:total]).each do |num| %>
+      <a href=<%= browse_path(page: num) %>><%= num %></a>
+    <% end %>
+    <p>results per page:
+      <a href=<%= pages_path(page_count: 12) %>>12</a> -
+      <a href=<%= pages_path(page_count: 24) %>>24</a> -
+      <a href=<%= pages_path(page_count: 48) %>>48</a>
     </p>
     <input type="submit" style="visibility: hidden;">
   </form>

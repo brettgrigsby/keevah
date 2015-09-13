@@ -2,6 +2,8 @@ Rails.application.routes.draw do
 
   root "home#index"
 
+  get "/pages", to: "pages#update"
+
   get "/browse", to: "loan_requests#index"
 
   get "/portfolio", to: "borrower_portfolio#show"

@@ -14,10 +14,16 @@ class ApplicationController < ActionController::Base
     current_user && current_user.borrower?
   end
 
-  def load_page(klass)
+  def load_page(klass, count)
+    @page ||= {}
     page = params[:page] || 1
-    page == "last" ? @page = Pager.last(klass, 24) : @page = page.to_i
+    page == "last" ? @page[:current] = Pager.last(klass, count) : @page[:current] = page.to_i
+    @page[:total] = klass.count / count.to_i
   end
 
-  helper_method :create_cart, :current_user, :current_borrower?
+  def page_count
+    session[:page_count] ||= 24
+  end
+
+  helper_method :create_cart, :current_user, :current_borrower?, :number_of_pages
 end

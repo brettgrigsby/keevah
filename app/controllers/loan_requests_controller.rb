@@ -1,11 +1,11 @@
 class LoanRequestsController < ApplicationController
   before_action :set_loan_request, only: [:update, :show]
   before_action only: [:index] do
-    load_page(LoanRequest)
+    load_page(LoanRequest, page_count)
   end
 
   def index
-    @loan_requests = Pager.page(LoanRequest, @page, 24)
+    @loan_requests = Pager.page(LoanRequest, @page[:current], page_count)
   end
 
   def create

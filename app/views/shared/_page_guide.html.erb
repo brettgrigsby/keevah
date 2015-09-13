@@ -2,7 +2,13 @@
   <form action=<%= browse_path %>>
     <p>
     <a href=<%= browse_path(page: 1) %>>first  -</a>
+    <% if @page[:current].to_i > 1 %>
+      <a href=<%= browse_path(page: (@page[:current].to_i - 1)) %>>prev  -</a>
+    <% end %>
       page: <input type="text" name="page" value=<%= @page[:current] %> id="page-input">
+    <% if @page[:current].to_i < @page[:total].to_i %>
+      <a href=<%= browse_path(page: (@page[:current].to_i + 1)) %>>-  next</a>
+    <% end %>
       <a href=<%= browse_path(page: "last") %>>-  last</a>
     </p>
     <% (1..@page[:total]).each do |num| %>

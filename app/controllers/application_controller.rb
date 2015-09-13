@@ -14,5 +14,9 @@ class ApplicationController < ActionController::Base
     current_user && current_user.borrower?
   end
 
+  def load_page
+    @page = params[:page].to_i || 1
+  end
+
   helper_method :create_cart, :current_user, :current_borrower?
 end

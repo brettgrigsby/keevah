@@ -1,8 +1,9 @@
 class LoanRequestsController < ApplicationController
   before_action :set_loan_request, only: [:update, :show]
+  before_action :load_page, only: [:index]
 
   def index
-    @loan_requests = LoanRequest.all
+    @loan_requests = LoanRequest.offset(@page * 24).limit(24)
   end
 
   def create

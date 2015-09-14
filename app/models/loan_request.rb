@@ -81,6 +81,6 @@ class LoanRequest < ActiveRecord::Base
   end
 
   def related_projects
-    categories.sample.loan_requests.sample(3)
+    categories.sample.loan_requests.limit(3)
   end
 end

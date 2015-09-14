@@ -10,8 +10,8 @@
       <a href=<%= browse_path(page: (@page[:current].to_i + 1)) %>>->  next</a>
     <% end %>
     <a href=<%= browse_path(page: "last") %>>->>  last</a>
-    </p>
-    <% (1..@page[:total]).each do |num| %>
+    </p>jump to page:
+    <% @page[:range].each do |num| %>
       <a href=<%= browse_path(page: num) %>><%= num %></a>
     <% end %>
     <p>results per page:

@@ -8,4 +8,12 @@ class Pager
     last_page = total / count.to_i
     total % count.to_i != 0 ? last_page : last_page - 1
   end
+
+  def self.range(current_page, total)
+    lower_limit = current_page - 5
+    upper_limit = current_page + 5
+    lower_limit = 1 if lower_limit < 1
+    upper_limit = total if upper_limit > total
+    (lower_limit..upper_limit)
+  end
 end

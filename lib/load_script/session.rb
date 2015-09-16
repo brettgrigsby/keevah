@@ -46,7 +46,7 @@ module LoadScript
     end
 
     def actions
-      [:browse_loan_requests, :sign_up_as_lender]
+      [:browse_loan_requests, :sign_up_as_lender, :browse_categories]
     end
 
     def log_in(email="demo+horace@jumpstartlab.com", pw="password")
@@ -74,6 +74,22 @@ module LoadScript
       "#{Faker::Name.name} #{Time.now.to_i}"
     end
 
+    def new_request_title
+      "#{Faker::Commerce.product_name} #{Time.now.to_i}"
+    end
+
+    def new_request_description
+      Faker::Company.catch_phrase
+    end
+
+    def request_by_date
+      Faker::Time.between(7.days.ago, 3.days.ago)
+    end
+
+    def repayment_date
+      Faker::Time.between(3.days.ago, Time.now)
+    end
+
     def new_user_email(name)
       "TuringPivotBots+#{name.split.join}@gmail.com"
     end
@@ -91,8 +107,37 @@ module LoadScript
       end
     end
 
+    def sign_up_as_borrower(name = new_user_name)
+      log_out
+      session.visit "#{host}"
+      session.find("#sign-up-dropdown").click
+      session.find("#sign-up-as-borrower").click
+      session.within("#borrowerSignUpModal") do
+        session.fill_in("user_name", with: name)
+        session.fill_in("user_email", with: new_user_email(name))
+        session.fill_in("user_password", with: "password")
+        session.fill_in("user_password_confirmation", with: "password")
+        session.click_link_or_button("Create Account")
+      end
+    end
+
+    def browse_categories
+      session.visit "#{host}/browse"
+      session.within("#categories-list") do
+        session.all("a").sample.click
+      end
+    end
+
+    def browse_category_pages
+      session.visit "#{host}/browse"
+      session.all(".pull-left").sample.click
+      session.all(".pagination").sample.click
+    end
+
     def categories
-      ["Agriculture", "Education", "Community"]
+      ["agriculture", "education", "community", "fun money", "architectural",
+      "philanthropic", "vehicle", "new home", "new pet", "livestock",
+      "equipment", "vacation", "new child", "political campaign"]
     end
   end
 end

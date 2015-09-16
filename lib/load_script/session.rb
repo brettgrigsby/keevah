@@ -47,7 +47,7 @@ module LoadScript
 
     def actions
       [:browse_loan_requests, :sign_up_as_lender, :browse_categories,
-      :browse_category_pages, :lender_makes_a_loan]
+      :browse_category_pages, :lender_makes_loan]
     end
 
     def log_in(email="demo+horace@jumpstartlab.com", pw="password")
@@ -137,7 +137,7 @@ module LoadScript
     def lender_makes_loan
       sign_up_as_lender
       session.visit "#{host}/browse"
-      session.all(".contribute-btn").sample.click
+      session.all(".contrib-btn").sample.click
       session.click_on("Basket")
       session.click_on("Transfer Funds")
     end

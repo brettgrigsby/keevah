@@ -20,10 +20,9 @@
 
 <div style="text-align: center;">
   <p>
-  <% cache "#{@category.title}-page-#{@page[:current]}" %>
+  <% cache @categories do %>
     <% @categories.each do |category| %>
       <a href=<%= category_path(category) %>><%= category.title %></a>
-
     <% end %>
   <% end %>
   </p>
@@ -31,7 +30,9 @@
 
 <br>
 
-<%= render "shared/lender_thumbnail" %>
+<% cache @loan_requests do %>
+  <%= render "shared/lender_thumbnail" %>
+<% end %>
 
 <%= render "shared/page_guide" %>
 

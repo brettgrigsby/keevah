@@ -4,7 +4,11 @@ class Pager
   end
 
   def self.last(klass, count)
-    total = klass.count
+    if klass == LoanRequest
+      total = klass.cache_count
+    else
+      total = klass.count
+    end
     last_page = total / count.to_i
     total % count.to_i != 0 ? last_page : last_page - 1
   end

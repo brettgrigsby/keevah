@@ -16,6 +16,16 @@ class LoanRequest < ActiveRecord::Base
     self.image_url = DefaultImages.random if self.image_url.empty?
   end
 
+  def self.cache_count
+    Rails.cache.fetch("loan_requests_cache_count", expires_in: 5.minutes) do
+      self.count
+    end
+  end
+
+  def cool_cache
+    Rails.cache.delete("loan_requests_cache_count")
+  end
+
   def owner
     self.user.name
   end

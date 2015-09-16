@@ -14,6 +14,7 @@ class LoanRequestsController < ApplicationController
 
     if loan_request.save
       Category.find_by(title: params[:loan_request][:category]).loan_requests << loan_request
+      loan_request.cool_cache
       flash[:notice] = "Loan Request Created"
       redirect_to(:back)
     else

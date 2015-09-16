@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
     if category_id
       @page[:total] = LoanRequestsCategory.where(category_id: category_id).size
     else
-      @page[:total] = klass.count / count.to_i
+      @page[:total] = klass.cache_count / count.to_i
     end
     @page[:range] = Pager.range(@page[:current], @page[:total])
   end

@@ -46,7 +46,8 @@ module LoadScript
     end
 
     def actions
-      [:browse_loan_requests, :sign_up_as_lender, :browse_categories]
+      [:browse_loan_requests, :sign_up_as_lender, :browse_categories,
+      :browse_category_pages]
     end
 
     def log_in(email="demo+horace@jumpstartlab.com", pw="password")
@@ -129,9 +130,8 @@ module LoadScript
     end
 
     def browse_category_pages
-      session.visit "#{host}/browse"
-      session.all(".pull-left").sample.click
-      session.all(".pagination").sample.click
+      browse_categories
+      session.all(".page-link").sample.click
     end
 
     def categories

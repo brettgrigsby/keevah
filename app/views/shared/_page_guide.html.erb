@@ -12,7 +12,7 @@
     <% end %>
     </p>jump to page:
     <% @page[:range].each do |num| %>
-      <a href=<%= browse_path(page: num) %>><%= num %></a>
+      <a class="page-link" href=<%= browse_path(page: num) %>><%= num %></a>
     <% end %>
     <p>results per page:
       <a href=<%= pages_path(page_count: 12) %>>12</a> -

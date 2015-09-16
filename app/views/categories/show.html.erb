@@ -18,6 +18,17 @@
   </div>
 </div>
 
+<div style="text-align: center;">
+  <p>
+  <% cache "#{@category.title}-page-#{@page[:current]}" %>
+    <% @categories.each do |category| %>
+      <a href=<%= category_path(category) %>><%= category.title %></a>
+
+    <% end %>
+  <% end %>
+  </p>
+</div>
+
 <br>
 
 <%= render "shared/lender_thumbnail" %>

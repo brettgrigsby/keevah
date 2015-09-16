@@ -4,11 +4,7 @@ class Pager
   end
 
   def self.last(klass, count)
-    if klass.class == Class
-      total = klass.count
-    else
-      total = klass.size
-    end
+    total = klass.count
     last_page = total / count.to_i
     total % count.to_i != 0 ? last_page : last_page - 1
   end

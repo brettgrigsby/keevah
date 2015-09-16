@@ -18,10 +18,10 @@ class ApplicationController < ActionController::Base
     @page ||= {}
     page = params[:page] || 1
     page == "last" ? @page[:current] = Pager.last(klass, count) : @page[:current] = page.to_i
-    if klass.class == Class
+    if klass == LoanRequest
       @page[:total] = klass.count / count.to_i
     else
-      @page[:total] = klass.size / count.to_i
+      @page[:total] = LoanRequestsCategory.where(category_id: klass.first.categories.first.id).size
     end
     @page[:range] = Pager.range(@page[:current], @page[:total])
   end

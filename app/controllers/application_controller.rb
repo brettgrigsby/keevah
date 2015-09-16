@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
     if klass.class == Class
       @page[:total] = klass.count / count.to_i
     else
-      @page[:total] = klass.size
+      @page[:total] = klass.size / count.to_i
     end
     @page[:range] = Pager.range(@page[:current], @page[:total])
   end

@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   resources :payment, only: [:update]
 
   resources :loan_requests
+  resources :categories, only: [:show]
 
   get "/cart", to: "cart#index"
   post "/cart", to: "cart#create"

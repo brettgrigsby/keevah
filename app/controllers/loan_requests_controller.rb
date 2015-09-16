@@ -6,6 +6,7 @@ class LoanRequestsController < ApplicationController
 
   def index
     @loan_requests = Pager.page(LoanRequest, @page[:current], page_count)
+    @categories = Category.all
   end
 
   def create

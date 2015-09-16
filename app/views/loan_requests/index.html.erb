@@ -18,6 +18,15 @@
   </div>
 </div>
 
+<div style="text-align: center;">
+  <p>
+    <% @categories.each do |category| %>
+      <a href=<%= category_path(category) %>><%= category.title %></a>
+
+    <% end %>
+  </p>
+</div>
+
 <br>
 
 <%= render "shared/lender_thumbnail" %>

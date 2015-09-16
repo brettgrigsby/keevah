@@ -14,14 +14,14 @@ class ApplicationController < ActionController::Base
     current_user && current_user.borrower?
   end
 
-  def load_page(klass, count)
+  def load_page(klass, count, category_id=nil)
     @page ||= {}
     page = params[:page] || 1
     page == "last" ? @page[:current] = Pager.last(klass, count) : @page[:current] = page.to_i
-    if klass == LoanRequest
-      @page[:total] = klass.count / count.to_i
+    if category_id
+      @page[:total] = LoanRequestsCategory.where(category_id: category_id).size
     else
-      @page[:total] = LoanRequestsCategory.where(category_id: klass.first.categories.first.id).size
+      @page[:total] = klass.count / count.to_i
     end
     @page[:range] = Pager.range(@page[:current], @page[:total])
   end

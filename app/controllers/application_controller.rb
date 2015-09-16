@@ -18,7 +18,11 @@ class ApplicationController < ActionController::Base
     @page ||= {}
     page = params[:page] || 1
     page == "last" ? @page[:current] = Pager.last(klass, count) : @page[:current] = page.to_i
-    @page[:total] = klass.count / count.to_i
+    if klass.class == Class
+      @page[:total] = klass.count / count.to_i
+    else
+      @page[:total] = klass.size
+    end
     @page[:range] = Pager.range(@page[:current], @page[:total])
   end
 

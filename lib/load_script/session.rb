@@ -47,7 +47,7 @@ module LoadScript
 
     def actions
       [:browse_loan_requests, :sign_up_as_lender, :browse_categories,
-      :browse_category_pages]
+      :browse_category_pages, :lender_makes_loan, :borrower_creates_loan_request]
     end
 
     def log_in(email="demo+horace@jumpstartlab.com", pw="password")
@@ -139,17 +139,16 @@ module LoadScript
       session.visit "#{host}/browse"
       session.all(".contrib-btn").sample.click
       session.click_on("Basket")
-      session.click_on("Transfer Funds")
     end
 
     def borrower_creates_loan_request
       sign_up_as_borrower
       session.click_on("Create Loan Request")
       session.within("#loanRequestModal") do
-        session.fill_in("loan_request_title", with: new_title)
-        session.fill_in("loan_request_description", with: new_description)
-        session.fill_in("loan_request_requested_by_date", with: new_request_date)
-        session.fill_in("loan_request_repayment_begin_date", with: new_repayment_date)
+        session.fill_in("loan_request_title", with: new_request_title)
+        session.fill_in("loan_request_description", with: new_request_description)
+        session.fill_in("loan_request_requested_by_date", with: request_by_date)
+        session.fill_in("loan_request_repayment_begin_date", with: repayment_date)
         session.select("Agriculture", from: "loan_request_category")
         session.fill_in("loan_request_amount", with: "100")
         session.click_link_or_button("Submit")
